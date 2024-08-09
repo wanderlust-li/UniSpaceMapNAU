@@ -18,13 +18,27 @@ public class FacultyService : IFacultyService
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
-    
+
     public async Task<IEnumerable<FacultyDTO>> GetAllFaculty()
+    {
+        return await _unitOfWork.FaluctyRepository
+            .List()
+            .AsNoTracking()
+            .ProjectTo<FacultyDTO>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<FacultyWithDepartmentDTO>> GetAllFacultiesWithDepartments()
     {
         return await _unitOfWork.FaluctyRepository.List()
             .AsNoTracking()
             .Include(s => s.Departments)
-            .ProjectTo<FacultyDTO>(_mapper.ConfigurationProvider)
+            .ProjectTo<FacultyWithDepartmentDTO>(_mapper.ConfigurationProvider)
             .ToListAsync();
+    }
+
+    public async Task<FacultyDTO> GetFacultyById(int id)
+    {
+        return _mapper.Map<FacultyDTO>(await _unitOfWork.FaluctyRepository.GetById(id));
     }
 }

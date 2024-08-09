@@ -8,7 +8,7 @@ public class StudentGroup
     public int Id { get; set; }
     [Required]
     public string Name { get; set; }
-    public int DepartamentId { get; set; }
-    public virtual Department Departament { get; set; }
+    public int DepartmentId { get; set; }
+    public virtual Department Department { get; set; }
     // public virtual ICollection<Faculty> Faculties { get; set; } = new HashSet<Faculty>(); 
 }

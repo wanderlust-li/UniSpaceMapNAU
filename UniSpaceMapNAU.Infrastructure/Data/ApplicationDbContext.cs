@@ -28,7 +28,7 @@ public class ApplicationDbContext : DbContext
                 );
         #endregion
         
-        #region Departament
+        #region Department
             modelBuilder.Entity<Department>().HasOne(c => c.Faculty).WithMany(bc => bc.Departments)
                 .HasForeignKey(c => c.FacultyId);
             modelBuilder.Entity<Department>().HasData(
@@ -57,15 +57,15 @@ public class ApplicationDbContext : DbContext
             #endregion
             
         #region SudentsGroups
-            modelBuilder.Entity<StudentGroup>().HasOne(sg => sg.Departament)
+            modelBuilder.Entity<StudentGroup>().HasOne(sg => sg.Department)
                 .WithMany(d => d.StudentGroups)
-                .HasForeignKey(sg => sg.DepartamentId);
+                .HasForeignKey(sg => sg.DepartmentId);
 
             modelBuilder.Entity<StudentGroup>().HasData(
-                new StudentGroup { Id = 1, Name = "Group A", DepartamentId = 1 },
-                new StudentGroup { Id = 2, Name = "Group B", DepartamentId = 1 },
-                new StudentGroup { Id = 3, Name = "Group C", DepartamentId = 1 },
-                new StudentGroup { Id = 4, Name = "Group E", DepartamentId = 4 }
+                new StudentGroup { Id = 1, Name = "Group A", DepartmentId = 1 },
+                new StudentGroup { Id = 2, Name = "Group B", DepartmentId = 1 },
+                new StudentGroup { Id = 3, Name = "Group C", DepartmentId = 1 },
+                new StudentGroup { Id = 4, Name = "Group E", DepartmentId = 4 }
             );
         #endregion
     }

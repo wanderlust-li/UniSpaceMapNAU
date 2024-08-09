@@ -74,4 +74,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     }
 
     public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
+    public virtual async Task<TEntity> GetById(object id)
+    {
+        return await _dbSet.FindAsync(id);
+    }
 }

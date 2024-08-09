@@ -13,10 +13,18 @@ public class FacultyController : ControllerBase
     {
         _facultyService = facultyService;
     }
+    
+    [HttpGet("get-all-faculties")]
+    public async Task<IActionResult> GetAllFaculties() => 
+        Ok(await _facultyService.GetAllFaculty());
+    
+    [HttpGet("get-faculty-by-id")]
+    public async Task<IActionResult> GetFacultyById(int id) => 
+        Ok(await _facultyService.GetFacultyById(id));
 
-    [HttpGet("get-all-faculty")]
-    public async Task<IActionResult> GetAllFaculty()
-    {
-        return Ok(await _facultyService.GetAllFaculty());
-    }
+    [HttpGet("get-all-faculties-with-departments")]
+    public async Task<IActionResult> GetAllFacultiesWithDepartments() => 
+        Ok(await _facultyService.GetAllFacultiesWithDepartments());
+    
+    
 }

@@ -8,5 +8,6 @@ public class FacultyProfile : Profile
     public FacultyProfile()
     {
         CreateMap<Domain.Entities.Faculty, FacultyDTO>().ReverseMap();
+        CreateMap<Domain.Entities.Faculty, FacultyWithDepartmentDTO>().ReverseMap();
     }
 }
