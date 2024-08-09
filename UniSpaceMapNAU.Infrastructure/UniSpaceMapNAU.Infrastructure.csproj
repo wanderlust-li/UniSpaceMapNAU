@@ -20,6 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\UniSpaceMapNAU.Application\UniSpaceMapNAU.Application.csproj" />
       <ProjectReference Include="..\UniSpaceMapNAU.Domain\UniSpaceMapNAU.Domain.csproj" />
     </ItemGroup>
 
