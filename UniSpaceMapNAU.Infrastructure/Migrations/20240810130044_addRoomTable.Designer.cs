@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniSpaceMapNAU.Infrastructure.Data;
 
@@ -10,9 +11,11 @@ using UniSpaceMapNAU.Infrastructure.Data;
 namespace UniSpaceMapNAU.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240810130044_addRoomTable")]
+    partial class addRoomTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,6 +234,59 @@ namespace UniSpaceMapNAU.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("UniSpaceMapNAU.Domain.Entities.Floor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BuildingId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FloorNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BuildingId");
+
+                    b.ToTable("Floors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BuildingId = 1,
+                            FloorNumber = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BuildingId = 1,
+                            FloorNumber = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BuildingId = 1,
+                            FloorNumber = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BuildingId = 1,
+                            FloorNumber = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            BuildingId = 1,
+                            FloorNumber = 5
+                        });
+                });
+
             modelBuilder.Entity("UniSpaceMapNAU.Domain.Entities.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -245,7 +301,7 @@ namespace UniSpaceMapNAU.Infrastructure.Migrations
                     b.Property<int>("FacultyId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FloorNumber")
+                    b.Property<int>("FloorId")
                         .HasColumnType("int");
 
                     b.Property<int>("RoomNumber")
@@ -258,6 +314,8 @@ namespace UniSpaceMapNAU.Infrastructure.Migrations
 
                     b.HasIndex("FacultyId");
 
+                    b.HasIndex("FloorId");
+
                     b.HasIndex("RoomTypeId");
 
                     b.ToTable("Rooms");
@@ -267,7 +325,7 @@ namespace UniSpaceMapNAU.Infrastructure.Migrations
                         {
                             Id = 1,
                             FacultyId = 1,
-                            FloorNumber = 1,
+                            FloorId = 1,
                             RoomNumber = 101,
                             RoomTypeId = 1
                         },
@@ -275,7 +333,7 @@ namespace UniSpaceMapNAU.Infrastructure.Migrations
                         {
                             Id = 2,
                             FacultyId = 1,
-                            FloorNumber = 1,
+                            FloorId = 1,
                             RoomNumber = 102,
                             RoomTypeId = 1
                         });
@@ -369,11 +427,28 @@ namespace UniSpaceMapNAU.Infrastructure.Migrations
                     b.Navigation("Faculty");
                 });
 
+            modelBuilder.Entity("UniSpaceMapNAU.Domain.Entities.Floor", b =>
+                {
+                    b.HasOne("UniSpaceMapNAU.Domain.Entities.Building", "Building")
+                        .WithMany()
+                        .HasForeignKey("BuildingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Building");
+                });
+
             modelBuilder.Entity("UniSpaceMapNAU.Domain.Entities.Room", b =>
                 {
                     b.HasOne("UniSpaceMapNAU.Domain.Entities.Faculty", "Faculty")
                         .WithMany()
                         .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniSpaceMapNAU.Domain.Entities.Floor", "Floor")
+                        .WithMany()
+                        .HasForeignKey("FloorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -384,6 +459,8 @@ namespace UniSpaceMapNAU.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Faculty");
+
+                    b.Navigation("Floor");
 
                     b.Navigation("RoomType");
                 });

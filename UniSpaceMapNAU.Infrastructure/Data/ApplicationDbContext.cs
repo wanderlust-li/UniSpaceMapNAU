@@ -102,17 +102,24 @@ public class ApplicationDbContext : DbContext
         
         #endregion
         
-        #region Floors
-        
-            modelBuilder.Entity<Floor>().HasData(
-                new Floor { Id = 1, BuildingId = 1, FloorNumber = 1 },
-                new Floor { Id = 2, BuildingId = 1, FloorNumber = 2 },
-                new Floor { Id = 3, BuildingId = 1, FloorNumber = 3 },
-                new Floor { Id = 4, BuildingId = 1, FloorNumber = 4 },
-                new Floor { Id = 5, BuildingId = 1, FloorNumber = 5 }
-                
+        #region Rooms
+            modelBuilder.Entity<Room>(entity =>
+            {
+                entity.HasKey(r => r.Id); 
+                entity.Property(r => r.RoomNumber).IsRequired();
+                entity.Property(r => r.FloorNumber).IsRequired();
+                entity.HasOne(r => r.RoomType) 
+                    .WithMany() 
+                    .HasForeignKey(r => r.RoomTypeId);
+                entity.HasOne(r => r.Faculty) 
+                    .WithMany()
+                    .HasForeignKey(r => r.FacultyId);
+            });
+            
+            modelBuilder.Entity<Room>().HasData(
+                new Room { Id = 1, RoomNumber = 101, FloorNumber = 1, RoomTypeId = 1, FacultyId = 1 },
+                new Room { Id = 2, RoomNumber = 102, FloorNumber = 1, RoomTypeId = 1, FacultyId = 1 }
             );
-        
         #endregion
     }
 
@@ -121,5 +128,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<StudentGroup> StudentsGroups { get; set; }
     public DbSet<Building> Buildings { get; set; }
     public DbSet<RoomType> RoomTypes { get; set; }
-    public DbSet<Floor> Floors { get; set; }
+    public DbSet<Room> Rooms { get; set; }
 }

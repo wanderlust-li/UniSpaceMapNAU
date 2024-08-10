@@ -10,6 +10,7 @@ public static class ApplicationServiceRegistration
     public static IServiceCollection AddApplicationServices(this  IServiceCollection services)
     {
         services.AddScoped<IFacultyService, FacultyService>();
+        services.AddScoped<IRoomTypeService, RoomTypeService>();
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         return services;
