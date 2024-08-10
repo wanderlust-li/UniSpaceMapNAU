@@ -74,21 +74,21 @@ public class ApplicationDbContext : DbContext
 
         #endregion
 
-        #region BuildingDetails
+        #region Buildings
 
-        modelBuilder.Entity<BuildingDetail>().HasData(
-            new BuildingDetail { Id = 1, Name = "Корпус 1" },
-            new BuildingDetail { Id = 2, Name = "Корпус 2" },
-            new BuildingDetail { Id = 3, Name = "Корпус 3" },
-            new BuildingDetail { Id = 4, Name = "Корпус 4" },
-            new BuildingDetail { Id = 5, Name = "Корпус 5" },
-            new BuildingDetail { Id = 6, Name = "Корпус 6" },
-            new BuildingDetail { Id = 7, Name = "Корпус 7" },
-            new BuildingDetail { Id = 8, Name = "Корпус 8" },
-            new BuildingDetail { Id = 9, Name = "Корпус 9" },
-            new BuildingDetail { Id = 10, Name = "Корпус 10" },
-            new BuildingDetail { Id = 11, Name = "Корпус 11" },
-            new BuildingDetail { Id = 12, Name = "Корпус 12" }
+        modelBuilder.Entity<Building>().HasData(
+            new Building { Id = 1, Name = "Корпус 1" },
+            new Building { Id = 2, Name = "Корпус 2" },
+            new Building { Id = 3, Name = "Корпус 3" },
+            new Building { Id = 4, Name = "Корпус 4" },
+            new Building { Id = 5, Name = "Корпус 5" },
+            new Building { Id = 6, Name = "Корпус 6" },
+            new Building { Id = 7, Name = "Корпус 7" },
+            new Building { Id = 8, Name = "Корпус 8" },
+            new Building { Id = 9, Name = "Корпус 9" },
+            new Building { Id = 10, Name = "Корпус 10" },
+            new Building { Id = 11, Name = "Корпус 11" },
+            new Building { Id = 12, Name = "Корпус 12" }
         );
 
         #endregion
@@ -101,11 +101,25 @@ public class ApplicationDbContext : DbContext
         );
         
         #endregion
+        
+        #region Floors
+        
+            modelBuilder.Entity<Floor>().HasData(
+                new Floor { Id = 1, BuildingId = 1, FloorNumber = 1 },
+                new Floor { Id = 2, BuildingId = 1, FloorNumber = 2 },
+                new Floor { Id = 3, BuildingId = 1, FloorNumber = 3 },
+                new Floor { Id = 4, BuildingId = 1, FloorNumber = 4 },
+                new Floor { Id = 5, BuildingId = 1, FloorNumber = 5 }
+                
+            );
+        
+        #endregion
     }
 
     public DbSet<Department> Departments { get; set; }
     public DbSet<Faculty> Faculties { get; set; }
     public DbSet<StudentGroup> StudentsGroups { get; set; }
-    public DbSet<BuildingDetail> BuildingDetails { get; set; }
+    public DbSet<Building> Buildings { get; set; }
     public DbSet<RoomType> RoomTypes { get; set; }
+    public DbSet<Floor> Floors { get; set; }
 }
