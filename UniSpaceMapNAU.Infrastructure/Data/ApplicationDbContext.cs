@@ -74,21 +74,21 @@ public class ApplicationDbContext : DbContext
 
         #endregion
 
-        #region BuildingDetails
+        #region Buildings
 
-        modelBuilder.Entity<BuildingDetail>().HasData(
-            new BuildingDetail { Id = 1, Name = "Корпус 1" },
-            new BuildingDetail { Id = 2, Name = "Корпус 2" },
-            new BuildingDetail { Id = 3, Name = "Корпус 3" },
-            new BuildingDetail { Id = 4, Name = "Корпус 4" },
-            new BuildingDetail { Id = 5, Name = "Корпус 5" },
-            new BuildingDetail { Id = 6, Name = "Корпус 6" },
-            new BuildingDetail { Id = 7, Name = "Корпус 7" },
-            new BuildingDetail { Id = 8, Name = "Корпус 8" },
-            new BuildingDetail { Id = 9, Name = "Корпус 9" },
-            new BuildingDetail { Id = 10, Name = "Корпус 10" },
-            new BuildingDetail { Id = 11, Name = "Корпус 11" },
-            new BuildingDetail { Id = 12, Name = "Корпус 12" }
+        modelBuilder.Entity<Building>().HasData(
+            new Building { Id = 1, Name = "Корпус 1" },
+            new Building { Id = 2, Name = "Корпус 2" },
+            new Building { Id = 3, Name = "Корпус 3" },
+            new Building { Id = 4, Name = "Корпус 4" },
+            new Building { Id = 5, Name = "Корпус 5" },
+            new Building { Id = 6, Name = "Корпус 6" },
+            new Building { Id = 7, Name = "Корпус 7" },
+            new Building { Id = 8, Name = "Корпус 8" },
+            new Building { Id = 9, Name = "Корпус 9" },
+            new Building { Id = 10, Name = "Корпус 10" },
+            new Building { Id = 11, Name = "Корпус 11" },
+            new Building { Id = 12, Name = "Корпус 12" }
         );
 
         #endregion
@@ -101,11 +101,32 @@ public class ApplicationDbContext : DbContext
         );
         
         #endregion
+        
+        #region Rooms
+            modelBuilder.Entity<Room>(entity =>
+            {
+                entity.HasKey(r => r.Id); 
+                entity.Property(r => r.RoomNumber).IsRequired();
+                entity.Property(r => r.FloorNumber).IsRequired();
+                entity.HasOne(r => r.RoomType) 
+                    .WithMany() 
+                    .HasForeignKey(r => r.RoomTypeId);
+                entity.HasOne(r => r.Faculty) 
+                    .WithMany()
+                    .HasForeignKey(r => r.FacultyId);
+            });
+            
+            modelBuilder.Entity<Room>().HasData(
+                new Room { Id = 1, RoomNumber = 101, FloorNumber = 1, RoomTypeId = 1, FacultyId = 1 },
+                new Room { Id = 2, RoomNumber = 102, FloorNumber = 1, RoomTypeId = 1, FacultyId = 1 }
+            );
+        #endregion
     }
 
     public DbSet<Department> Departments { get; set; }
     public DbSet<Faculty> Faculties { get; set; }
     public DbSet<StudentGroup> StudentsGroups { get; set; }
-    public DbSet<BuildingDetail> BuildingDetails { get; set; }
+    public DbSet<Building> Buildings { get; set; }
     public DbSet<RoomType> RoomTypes { get; set; }
+    public DbSet<Room> Rooms { get; set; }
 }

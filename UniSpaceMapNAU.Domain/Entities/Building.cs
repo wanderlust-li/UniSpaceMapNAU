@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace UniSpaceMapNAU.Domain.Entities;
 
-public class BuildingDetail
+public class Building
 {
     [Key]
     public int Id { get; set; }

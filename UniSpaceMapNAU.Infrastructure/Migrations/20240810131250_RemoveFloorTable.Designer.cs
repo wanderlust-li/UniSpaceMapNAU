@@ -11,8 +11,8 @@ using UniSpaceMapNAU.Infrastructure.Data;
 namespace UniSpaceMapNAU.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240809200904_FixDepartment")]
-    partial class FixDepartment
+    [Migration("20240810131250_RemoveFloorTable")]
+    partial class RemoveFloorTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,85 @@ namespace UniSpaceMapNAU.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("UniSpaceMapNAU.Domain.Entities.Building", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Buildings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Корпус 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Корпус 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Корпус 3"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Корпус 4"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Корпус 5"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Корпус 6"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Корпус 7"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Корпус 8"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Корпус 9"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Корпус 10"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Корпус 11"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Корпус 12"
+                        });
+                });
 
             modelBuilder.Entity("UniSpaceMapNAU.Domain.Entities.Department", b =>
                 {
@@ -155,6 +234,85 @@ namespace UniSpaceMapNAU.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("UniSpaceMapNAU.Domain.Entities.Room", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FacultyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FloorNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacultyId");
+
+                    b.HasIndex("RoomTypeId");
+
+                    b.ToTable("Rooms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FacultyId = 1,
+                            FloorNumber = 1,
+                            RoomNumber = 101,
+                            RoomTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FacultyId = 1,
+                            FloorNumber = 1,
+                            RoomNumber = 102,
+                            RoomTypeId = 1
+                        });
+                });
+
+            modelBuilder.Entity("UniSpaceMapNAU.Domain.Entities.RoomType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoomTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Лекційна"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Практична"
+                        });
+                });
+
             modelBuilder.Entity("UniSpaceMapNAU.Domain.Entities.StudentGroup", b =>
                 {
                     b.Property<int>("Id")
@@ -212,6 +370,25 @@ namespace UniSpaceMapNAU.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Faculty");
+                });
+
+            modelBuilder.Entity("UniSpaceMapNAU.Domain.Entities.Room", b =>
+                {
+                    b.HasOne("UniSpaceMapNAU.Domain.Entities.Faculty", "Faculty")
+                        .WithMany()
+                        .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniSpaceMapNAU.Domain.Entities.RoomType", "RoomType")
+                        .WithMany()
+                        .HasForeignKey("RoomTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Faculty");
+
+                    b.Navigation("RoomType");
                 });
 
             modelBuilder.Entity("UniSpaceMapNAU.Domain.Entities.StudentGroup", b =>

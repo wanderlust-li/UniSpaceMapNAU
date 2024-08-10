@@ -17,4 +17,6 @@ public interface IRepository<TEntity> where TEntity : class
     public IQueryable<TEntity> List();
     Task SaveChangesAsync();
     Task<TEntity> GetById(object id);
+    Task InsertAsync(params TEntity[] entities); 
+    Task Delete(object id);
 }
