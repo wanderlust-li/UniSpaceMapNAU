@@ -19,4 +19,9 @@ public interface IRepository<TEntity> where TEntity : class
     Task<TEntity> GetById(object id);
     Task InsertAsync(params TEntity[] entities); 
     Task Delete(object id);
+    Task<TResult> GetFirstOrDefaultAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
+        Expression<Func<TEntity, bool>> predicate = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+        bool disableTracking = true, bool ignoreQueryFilters = false);
 }

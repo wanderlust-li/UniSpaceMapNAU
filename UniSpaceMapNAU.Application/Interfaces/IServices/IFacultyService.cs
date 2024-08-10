@@ -8,4 +8,5 @@ public interface IFacultyService
     Task<IEnumerable<FacultyDTO>> GetAllFaculty();
     Task<IEnumerable<FacultyWithDepartmentDTO>> GetAllFacultiesWithDepartments();
     Task<FacultyDTO> GetFacultyById(int id);
+    Task<List<FacultyWithDepartmentDTO>> GetFacultyByIdWithDepartments(int id);
 }

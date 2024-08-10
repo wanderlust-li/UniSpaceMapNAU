@@ -26,5 +26,8 @@ public class FacultyController : ControllerBase
     public async Task<IActionResult> GetAllFacultiesWithDepartments() => 
         Ok(await _facultyService.GetAllFacultiesWithDepartments());
     
+    [HttpGet("get-faculty-by-id-with-departments")]
+    public async Task<IActionResult> GetFacultyByIdWithDepartments(int id) => 
+        Ok(await _facultyService.GetFacultyByIdWithDepartments(id));
     
 }
