@@ -41,4 +41,13 @@ public class FacultyService : IFacultyService
     {
         return _mapper.Map<FacultyDTO>(await _unitOfWork.FaluctyRepository.GetById(id));
     }
+
+    public async Task<List<FacultyWithDepartmentDTO>> GetFacultyByIdWithDepartments(int id)
+    {
+        return await _unitOfWork.FaluctyRepository.List()
+            .Include(d => d.Departments)
+            .Where(u => u.Id == id)
+            .ProjectTo<FacultyWithDepartmentDTO>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
 }
