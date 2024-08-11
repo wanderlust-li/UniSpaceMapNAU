@@ -11,6 +11,9 @@ public static class ApplicationServiceRegistration
     {
         services.AddScoped<IFacultyService, FacultyService>();
         services.AddScoped<IRoomTypeService, RoomTypeService>();
+        services.AddScoped<IBuildingService, BuildingService>();
+        services.AddScoped<IDepartmentService, DepartmentService>();
+        services.AddScoped<IRoomService, RoomService>();
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         return services;

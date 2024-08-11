@@ -10,6 +10,9 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     private readonly ApplicationDbContext _context;
     private IRepository<Faculty> _facultyRepository;
     private IRepository<RoomType> _roomTypeRepository;
+    private IRepository<Building> _buildingRepository;
+    private IRepository<Department> _departmentRepository;
+    private IRepository<Room> _roomRepository;
 
     public UnitOfWork(ApplicationDbContext context)
     {
@@ -33,6 +36,36 @@ public class UnitOfWork : IUnitOfWork, IDisposable
             if (_roomTypeRepository == null)
                 _roomTypeRepository = new Repository<RoomType>(_context);
             return _roomTypeRepository;
+        }
+    }
+
+    public IRepository<Building> BuildingRepository
+    {
+        get
+        {
+            if (_buildingRepository == null)
+                _buildingRepository = new Repository<Building>(_context);
+            return _buildingRepository;
+        }
+    }
+
+    public IRepository<Department> DepartmentRepository
+    {
+        get
+        {
+            if (_departmentRepository == null)
+                _departmentRepository = new Repository<Department>(_context);
+            return _departmentRepository;
+        }
+    }
+
+    public IRepository<Room> RoomRepository
+    {
+        get
+        {
+            if (_roomRepository == null)
+                _roomRepository = new Repository<Room>(_context);
+            return _roomRepository;
         }
     }
 
